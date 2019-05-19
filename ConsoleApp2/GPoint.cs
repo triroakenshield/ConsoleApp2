@@ -16,7 +16,7 @@ namespace ConsoleApp2
 
         public override string ToString()
         {
-            return $"PointFromText('POINT({lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)})')";
+            return $"PointFromText('POINT({lon.ToString(CultureInfo.InvariantCulture)} {lat.ToString(CultureInfo.InvariantCulture)})')";
         }
 
     }

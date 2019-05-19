@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
 using System.Linq;
 using System.Text;
 using System.Net.Http;
@@ -73,6 +74,16 @@ namespace ConsoleApp1
                     }
                 }
                 File.WriteAllText("res.sql", String.Join("", rList.Select(c => c.GetInsSql()).ToArray()));
+                //
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" xmlns:kml=\"http://www.opengis.net/kml/2.2\" xmlns:atom=\"http://www.w3.org/2005/Atom\" />");
+                XmlElement Document = doc.CreateElement("Document");
+                foreach (Event ev in rList)
+                {
+                    if (ev.location.coordinates != null) Document.AppendChild(ev.ToXml(doc));
+                }
+                doc.DocumentElement.AppendChild(Document);
+                doc.Save("res.kml");
             }
         }
 

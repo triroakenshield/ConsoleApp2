@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -34,6 +35,16 @@ $"VALUES ({this.id}, \'{this.name.Replace("'", "\\'")}\', '', \'{this.GetCats()}
             {
                 return "";
             }
+        }
+
+        public XmlElement ToXml(XmlDocument doc)
+        {
+            XmlElement Placemark = doc.CreateElement("Placemark");
+            XmlElement title = doc.CreateElement("name");
+            title.InnerText = this.name;
+            Placemark.AppendChild(title);
+            Placemark.AppendChild(this.location.ToXml(doc));
+            return Placemark;
         }
 
     }
